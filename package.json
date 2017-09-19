@@ -1,0 +1,50 @@
+{
+	"name": "nspath",
+	"version": "0.0.0",
+	"description": "Insert path to user PATH environment variable.",
+	"main": "nspath.js",
+	"option": {
+		"shell": "nspath"
+	},
+	"bin": {
+		"nspath": "run.js"
+	},
+	"scripts": {
+		"formal": "jesy apply '*.json'",
+		"clear": "rsetmod clean --clear",
+		"reset": "rsetmod clean",
+		"load": "flxc execute ./.install",
+		"pristine": "npm run reset && npm run load && npm run formal",
+		"test": "mocha nspath-test.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/volkovasystems/nspath.git"
+	},
+	"keywords": [
+		"insert",
+		"path",
+		"user",
+		"environment",
+		"variable",
+		"nspath"
+	],
+	"author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/volkovasystems/nspath/issues"
+	},
+	"homepage": "https://github.com/volkovasystems/nspath#readme",
+	"dependencies": {
+		"depher": "^0.38.0",
+		"detr": "^0.4.0",
+		"falzy": "^0.23.0",
+		"gnaw": "^0.21.0",
+		"kept": "^0.24.0",
+		"lire": "^0.17.0",
+		"pedon": "^0.15.0",
+		"protype": "^0.24.0",
+		"shft": "^0.5.0",
+		"yargs": "^9.0.1"
+	}
+}
