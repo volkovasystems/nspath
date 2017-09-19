@@ -36,15 +36,11 @@
 	},
 	"homepage": "https://github.com/volkovasystems/nspath#readme",
 	"dependencies": {
-		"depher": "^0.38.0",
-		"detr": "^0.4.0",
 		"falzy": "^0.23.0",
 		"gnaw": "^0.21.0",
-		"kept": "^0.24.0",
-		"lire": "^0.17.0",
+		"nsrt": "^0.12.0",
+		"outre": "^0.22.0",
 		"pedon": "^0.15.0",
-		"protype": "^0.24.0",
-		"shft": "^0.5.0",
 		"yargs": "^9.0.1"
 	}
 }

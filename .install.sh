@@ -1,12 +1,8 @@
 yarn add \
-depher \
-detr \
 falzy \
 gnaw \
-kept \
-lire \
+nsrt \
+outre \
 pedon \
-protype \
-shft \
 yargs \
 --save
