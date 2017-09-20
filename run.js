@@ -60,19 +60,32 @@ const nspath = require( path.resolve( __dirname, "nspath" ) );
 const package = require( path.resolve( __dirname, "package.json" ) );
 
 const parameter = yargs
-	.epilogue( ( package.homepage )?
-		`For more information go to, ${ package.homepage }` :
-		"Please read usage and examples carefully." )
+	.epilogue(
+		( package.homepage )
+		? `For more information go to, ${ package.homepage }`
+		: "Please read usage and examples carefully."
+	)
 
 	.usage( `Usage: ${ package.option.shell } insert <path>` )
 
-	.command( "insert <path>",
-		"Insert path to the user PATH environment variable." )
+	.command(
+		"insert <path>",
+		"Insert path to the user PATH environment variable."
+	)
 
 	.demand( 1, [ "path" ] )
 
-	.example( "$0 insert /my/path",
-		"Insert `/my/path` to the user PATH environment variable" )
+	.example(
+		"$0 insert /my/path",
+		"Insert `/my/path` to the user PATH environment variable"
+	)
+
+	.option( "e", {
+		"alias": "evaluate",
+		"default": false,
+		"describe": "If the passed path is a command that should be evaluated first.",
+		"type": "boolean"
+	} )
 
 	.help( "help" )
 
@@ -84,4 +97,9 @@ const parameter = yargs
 
 	.argv;
 
-process.stdout.write( nspath( parameter.path, true ) );
+if( parameter.evaluate ){
+	process.stdout.write( nspath( parameter.path, EVALUATE_PATH, true ) );
+
+}else{
+	process.stdout.write( nspath( parameter.path, true ) );
+}

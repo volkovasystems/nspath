@@ -48,21 +48,32 @@
 	@include:
 		{
 			"child": "child_process",
+			"depher": "depher",
 			"falzy": "falzy",
 			"gnaw": "gnaw",
+			"harden": "harden",
+			"kept": "kept",
 			"nsrt": "nsrt",
 			"outre": "outre",
-			"pedon": "pedon"
+			"pedon": "pedon",
+			"raze": "raze"
 		}
 	@end-include
 */
 
 const child = require( "child_process" );
+const depher = require( "depher" );
 const falzy = require( "falzy" );
 const gnaw = require( "gnaw" );
+const harden = require( "harden" );
+const kept = require( "kept" );
 const nsrt = require( "nsrt" );
 const outre = require( "outre" );
 const pedon = require( "pedon" );
+const raze = require( "raze" );
+
+harden( "EVALUATE_PATH", Symbol( "evaluate-path" ) );
+harden( "TRUE_PATH", Symbol( "true-path" ) );
 
 const PATH_VARIABLE = ( ( ) => {
 	if( pedon.WINDOWS ){
@@ -73,11 +84,15 @@ const PATH_VARIABLE = ( ( ) => {
 	}
 } )( );
 
-const nspath = function nspath( path, synchronous ){
+const nspath = function nspath( path, mode, synchronous ){
 	/*;
 		@meta-configuration:
 			{
-				"path": "string"
+				"path": "string".
+				"mode": [
+					"function",
+					"symbol"
+				],
 				"synchronous": "boolean"
 			}
 		@end-meta-configuration
@@ -87,14 +102,29 @@ const nspath = function nspath( path, synchronous ){
 		throw new Error( "invalid path" );
 	}
 
-	if( synchronous === true ){
+	let parameter = raze( arguments );
+
+	synchronous = depher( parameter, BOOLEAN, false );
+
+	mode = depher( parameter, [ SYMBOL, FUNCTION ], TRUE_PATH );
+
+	if( synchronous ){
+		if( !kept( path, true ) && mode === EVALUATE_PATH ){
+			try{
+				path = gnaw( path, true );
+
+			}catch( error ){
+				throw new Error( `cannot evaluate path, ${ error.stack }` );
+			}
+		}
+
 		if( pedon.WINDOWS ){
 			try{
-				path = nsrt( outre( gnaw( "echo", PATH_VARIABLE, true ).split( ";" ) ), path ).join( ";" );
+				path = nsrt( outre( gnaw( `echo ${ PATH_VARIABLE }`, true ).split( ";" ) ), path ).join( ";" );
 
 				child.execSync( `setx path "${ path }"` );
 
-				return gnaw( "echo", PATH_VARIABLE );
+				return gnaw( `echo ${ PATH_VARIABLE }`, true );
 
 			}catch( error ){
 				throw new Error( `cannot insert path, ${ error.stack }` );
